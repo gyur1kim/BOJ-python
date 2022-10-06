@@ -6,6 +6,7 @@ def BFS(i, j):
     global findGram
     queue = deque([(i, j)])
     visited[i][j] = 1
+    findGram = 10001
 
     while queue:
         i, j = queue.popleft()
@@ -13,8 +14,8 @@ def BFS(i, j):
             return 'Fail' if findGram > T else findGram
 
         # 탐색 시작해보자구
-        for d in range(4):
-            nx, ny = i + directions[d][0], j + directions[d][1]
+        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+            nx, ny = i + dx, j + dy
             if 0<=nx<N and 0<=ny<M and castle[nx][ny] != 1 and not visited[nx][ny]:
                 # 다음 영역이 도착 지점이면?
                 if nx == N-1 and ny == M-1:
@@ -23,8 +24,8 @@ def BFS(i, j):
                 # 갈 수 있는 길이면
                 if castle[nx][ny] == 0:
                     # 큐에 넣고 방문 처리, 이전 값보다 한발짝 더 움직인거로 보자
-                    queue.append((nx, ny))
                     visited[nx][ny] = visited[i][j] + 1
+                    queue.append((nx, ny))
                 # 검을 찾았다면?
                 elif castle[nx][ny] == 2:
                     # 방문 처리하고, 최단거리 계산하기
@@ -38,8 +39,7 @@ N, M, T = map(int, input().split())  # 행, 렬, 제한 시간
 castle = [list(map(int, input().split())) for _ in range(N)]
 visited = [[0] * M for _ in range(N)]
 
-directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-findGram = 10001
+# directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 print(BFS(0, 0))
 # for l in visited:
 #     print(l)
