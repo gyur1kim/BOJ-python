@@ -130,3 +130,39 @@ else:           # 익은 토마토가 있음!! BFS 시작
 
 무조건 visited를 사용해서 풀지 말고, 생각을 정리한 뒤 효율적으로 문제를 해결하는 습관을 들어야할 듯 하다..
 '''
+
+
+# 보너스. 시현양의 궁금증
+# 튜플에서 하나씩 빼는게 빠를까 아니면 인덱스로 접근하는게 빠를까?
+from collections import deque
+M, N = map(int, input().split())  # M: 가로, N: 세로
+box = [list(map(int, input().split())) for _ in range(N)]
+tomatoes = 0   # 덜 익은 토마토의 개수
+queue = deque()     # BFS 탐색을 할 큐
+
+for i in range(N):
+    for j in range(M):
+        if box[i][j] == 1:          # 익은 토마토가 존재하면
+            queue.append((i, j))    # 큐에 넣기
+        elif box[i][j] == 0:
+            tomatoes += 1
+
+day = 0
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+if not queue:   # 익은 토마토가 없음!! 익을 수가 없으니 -1 출력
+    print(-1)
+else:           # 익은 토마토가 있음!! BFS 시작
+    while queue:
+        i, j = queue.popleft()
+        for d in range(4):
+            nx, ny = i+dx[d], j+dy[d]
+            if 0<=nx<N and 0<=ny<M and box[nx][ny] == 0:
+                day = box[i][j]
+                tomatoes -= 1             # 안 익었던 토마토의 개수 -1
+                queue.append((nx, ny))
+                box[nx][ny] = box[i][j] + 1
+    if not tomatoes:   # 토마토가 0이면?
+        print(day)
+    else:              # 토마토가 0이 아니면?
+        print(-1)
