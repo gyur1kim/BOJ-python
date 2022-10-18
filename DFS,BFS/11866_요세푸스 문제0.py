@@ -43,3 +43,22 @@ c는 아까 원소를 날린 인덱스를 나타낸다.
 '''
 
 print(f'<{str([a.pop(c := (c+k-1) % b)for b in a[::-1]])[1:-1]}>')
+
+
+# shpark0913님
+N, K = map(int, input().split())
+arr = [i for i in range(1, N+1)]
+arr2 = []
+idx = K - 1
+
+for i in range(N):
+    idx = idx % len(arr)
+    arr2.append(arr.pop(idx))
+    idx += (K-1)
+
+# print('<', end='')
+# for i in range(len(arr2)-1):
+#     print(f'{arr2[i]}, ', end='')
+# print(f'{arr2[-1]}>')
+
+print(f'<{str(arr2)[1:-1]}>')
