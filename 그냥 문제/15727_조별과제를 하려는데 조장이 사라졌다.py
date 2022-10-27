@@ -1,0 +1,1 @@
+print(n//5 + 1) if (n := int(input())) % 5 else print(n//5)
