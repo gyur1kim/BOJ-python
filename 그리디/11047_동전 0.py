@@ -3,7 +3,7 @@ N, K = map(int, input().split())
 coins = []
 
 for i in range(N):
-    if (n := int(input())) < K:
+    if (n := int(input())) <= K:
         coins.append(n)
         continue
     break
